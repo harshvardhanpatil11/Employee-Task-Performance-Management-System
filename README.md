@@ -1,258 +1,133 @@
 # Employee Task & Performance Management System
 
-> ⚠️ **PROJECT STATUS: UNDER WORK — NOT READY TO USE**
->
-> This project is currently under development. Some features may be incomplete, unstable, or not implemented yet. **This project is not ready for production or regular use.**
+Taskflow is a Java web application for organizing employees, departments, tasks, and team performance. It uses JSP and Java Servlets for the web interface and controllers, JDBC for database access, and MySQL for storage.
 
-## 📌 Project Description
+> This repository uses standard Java web technologies. It does not use Maven, Spring, REST APIs, Hibernate, or JPA.
 
-The **Employee Task & Performance Management System** is a web-based application designed to help organizations manage employees, departments, tasks, and employee performance.
+## Features
 
-The system provides different access levels for **Admin, Manager, and Employee**.
+### Roles and access
 
-### Main Features
+- **Admin:** dashboard, employee directory, employee account management, department management, and task oversight.
+- **Manager:** team task dashboard, task creation and assignment, and task progress monitoring.
+- **Employee:** assigned task list, task status updates, and personal task performance summary.
+- Login sessions, role checks, and logout.
 
-* 🔐 Role-based login and authentication
-* 👨‍💼 Admin manages employees and departments
-* 📋 Managers create and assign tasks
-* 👨‍💻 Employees view and update assigned tasks
-* 🔄 Task status management
-* 📊 Employee performance statistics
-* 🔎 Search and filtering
-* 📈 Dashboard with task completion information
-* 🔗 REST APIs
-* 🗄️ MySQL database
-* 🔒 Role-based authorization
+### Tasks and performance
 
-## 👥 User Roles
+- Create tasks with title, description, priority, assignee, start date, and due date.
+- Employees can set task status to Pending, In Progress, or Completed.
+- Dashboard cards show task totals, status counts, overdue work, and completion percentage.
+- The database schema includes a task remarks table and a performance summary table.
 
-### Admin
+## Technology
 
-* Manage employees
-* Manage departments
-* View system information
-* Monitor tasks and statistics
+- Java 17+
+- JSP and Jakarta Servlets
+- JDBC
+- MySQL 8+ (MariaDB may also work)
+- Apache Tomcat 10.1
+- HTML, CSS, JavaScript, and Bootstrap 5
 
-### Manager
-
-* View employees
-* Create and assign tasks
-* Monitor task progress
-* View employee performance
-
-### Employee
-
-* View assigned tasks
-* Update task status
-* Add task remarks
-* View personal performance
-
-## 🛠️ Technologies Used
-
-### Frontend
-
-* HTML5
-* CSS3
-* JavaScript
-* Bootstrap
-
-### Backend
-
-* Java
-* Spring Boot
-* Spring Security
-* Spring Data JPA
-* REST API
-
-### Database
-
-* MySQL
-
-### Tools
-
-* IntelliJ IDEA / Eclipse
-* MySQL Workbench
-* Postman
-* Git
-* GitHub
-* Maven
-
-## 🏗️ Project Architecture
-
-The project follows a basic layered architecture:
+## Project layout
 
 ```text
-Frontend
-   ↓
-REST API
-   ↓
-Controller
-   ↓
-Service
-   ↓
-Repository
-   ↓
-MySQL Database
+database/schema.sql                         Database and table definitions
+src/main/java/com/etpms/                    Servlets, filters, and application listener
+src/main/java/com/etpms/dao/                JDBC data access
+src/main/java/com/etpms/model/              Application models
+src/main/java/com/etpms/util/               Database and password utilities
+src/main/webapp/WEB-INF/views/               JSP pages
+src/main/webapp/assets/                      Stylesheets and JavaScript
+build.ps1                                    Windows WAR build script
 ```
 
-## 📂 Planned Project Structure
+## Requirements
 
-```text
-employee-task-management/
-│
-├── src/
-│   └── main/
-│       ├── java/
-│       │   └── com/example/employeemanagement/
-│       │       ├── controller/
-│       │       ├── service/
-│       │       ├── repository/
-│       │       ├── entity/
-│       │       ├── dto/
-│       │       ├── security/
-│       │       └── exception/
-│       │
-│       └── resources/
-│           ├── static/
-│           └── application.properties
-│
-├── pom.xml
-├── README.md
-└── .gitignore
+- JDK 17 or newer
+- Apache Tomcat 10.1
+- MySQL Server 8 or a compatible MySQL database
+- MySQL Connector/J driver
+- PowerShell on Windows to use the included `build.ps1`
+
+## Setup and run on Windows
+
+### 1. Create the database
+
+From the project root, run the schema script. Add `-p` if your MySQL root account has a password:
+
+```powershell
+mysql -u root -e "source database/schema.sql"
 ```
 
-## 🚧 Current Development Status
+### 2. Set the local tool paths
 
-**Status: 🟡 Under Work / Work in Progress**
+Download and extract a JDK, Tomcat, and MySQL Connector/J if they are not already installed. Set these paths in PowerShell; replace the example paths with the locations on your computer:
 
-The project is currently being developed and tested.
+```powershell
+$jdk = 'C:\tools\jdk-17'
+$tomcat = 'C:\tools\apache-tomcat-10.1'
+$connector = 'C:\tools\mysql-connector-j.jar'
 
-### Planned Development
-
-* [ ] Project setup
-* [ ] MySQL database configuration
-* [ ] User and role management
-* [ ] Authentication
-* [ ] Admin module
-* [ ] Manager module
-* [ ] Employee module
-* [ ] Department management
-* [ ] Task management
-* [ ] Task status tracking
-* [ ] Performance calculation
-* [ ] Dashboard
-* [ ] Search and filtering
-* [ ] REST API testing
-* [ ] Security testing
-* [ ] Final UI improvements
-* [ ] Documentation
-
-## ⚠️ Important Notice
-
-**This project is NOT READY TO USE.**
-
-It is currently being developed as a learning and portfolio project. The functionality, security, database structure, and user interface may change during development.
-
-Do not use this project for real employee data or production environments at this stage.
-
-## 💻 Planned Setup
-
-Once the project is completed, the expected setup will be:
-
-### 1. Clone the repository
-
-```bash
-git clone <repository-url>
-cd employee-task-management
+$env:JAVA_HOME = $jdk
+$env:PATH = "$jdk\bin;$env:PATH"
 ```
 
-### 2. Create MySQL Database
+### 3. Build and deploy
 
-```sql
-CREATE DATABASE employee_management;
+Run the build script from the project root. It compiles the Java source, packages the web application, and includes Connector/J in the WAR:
+
+```powershell
+.uild.ps1 -TomcatHome $tomcat -MySqlConnector $connector
+Copy-Item .\build\etpms.war "$tomcat\webapps\etpms.war" -Force
 ```
 
-### 3. Configure Database
+### 4. Configure the database and start Tomcat
 
-Update the database configuration in:
+Set the database connection values in the same PowerShell window. Use your MySQL account and password:
 
-```text
-src/main/resources/application.properties
+```powershell
+$env:ETPMS_DB_URL = 'jdbc:mysql://localhost:3306/etpms?useSSL=false&serverTimezone=UTC'
+$env:ETPMS_DB_USER = 'root'
+$env:ETPMS_DB_PASSWORD = 'your-mysql-password'
+
+$env:CATALINA_HOME = $tomcat
+$env:CATALINA_BASE = $tomcat
+& "$tomcat\bin\catalina.bat" run
 ```
 
-### 4. Run the Application
+Keep this window open while the server runs. Press **Ctrl+C** in the window to stop Tomcat. If port `8080` is already in use, change the connector port in `$tomcat\conf\server.xml` and use the new port in the URL.
 
-Using Maven:
+### 5. Open the application
 
-```bash
-mvn spring-boot:run
-```
+Visit [http://localhost:8080/etpms/login](http://localhost:8080/etpms/login).
 
-Or run the main Spring Boot application from IntelliJ IDEA/Eclipse.
+## Demo accounts
 
-> **Note:** Setup instructions may change while the project is under development.
+On the first startup with an empty `users` table, the application creates these demo accounts:
 
-## 🧪 Testing
+| Role | Username | Password |
+|---|---|---|
+| Admin | `admin` | `pass@123` |
+| Manager | `manager` | `pass@123` |
+| Employee | `employee` | `pass@123` |
 
-API testing will be performed using **Postman**.
+The demo accounts are for local development only. The application automatically creates them when the `users` table is empty, so do not expose an unmodified deployment to a public network or use these accounts for real organizational data.
 
-Planned testing includes:
+Passwords are stored as salted PBKDF2-HMAC-SHA256 hashes. The initial demo users are created by `UserDAO.ensureDemoUsers()` in the application listener.
 
-* Login authentication
-* Employee CRUD operations
-* Department CRUD operations
-* Task creation
-* Task assignment
-* Task status updates
-* Role-based authorization
-* Invalid input handling
-* API error handling
+## Current scope
 
-## 🔮 Future Enhancements
+The current UI supports employee create, edit, and delete; department create and delete; task creation and assignment; and employee task status updates. Task remarks and task history are represented in the database design but are not yet exposed as workflows in the UI. Editing existing task details and editing department details are also not currently implemented.
 
-Possible future improvements:
+## Configuration
 
-* Email notifications
-* Task reminders
-* Advanced performance reports
-* Charts and analytics
-* Profile management
-* File attachments for tasks
-* Password reset
-* Activity logs
-* Deployment to cloud
-* Mobile application
+The database connection can be customized with environment variables:
 
-## 📚 Learning Objectives
+| Variable | Default |
+|---|---|
+| `ETPMS_DB_URL` | `jdbc:mysql://localhost:3306/etpms?useSSL=false&serverTimezone=UTC` |
+| `ETPMS_DB_USER` | `root` |
+| `ETPMS_DB_PASSWORD` | Empty password |
 
-This project is being developed to gain practical experience in:
-
-* Java
-* Object-Oriented Programming
-* Spring Boot
-* REST API development
-* Spring Security
-* MySQL and SQL
-* JPA/Hibernate
-* CRUD operations
-* Authentication and authorization
-* Git and GitHub
-* Software development practices
-
-## 👨‍💻 Author
-
-**Harsh Patil**
-
-Computer Engineering Student
-
-## 📄 License
-
-This project is currently under development and is intended primarily for **educational and portfolio purposes**.
-
----
-
-> 🚧 **WORK IN PROGRESS**
->
-> **This project is under development and is NOT READY TO USE.**
->
-> Features, APIs, database structure, and UI may change as development continues.
+Avoid committing database passwords or other secrets to GitHub.
