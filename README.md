@@ -100,7 +100,7 @@ Keep this window open while the server runs. Press **Ctrl+C** in the window to s
 
 ### 5. Open the application
 
-Visit [http://localhost:8080/etpms/login](http://localhost:8080/etpms/login).
+Visit [http://localhost:8080/etpms/login](http://127.0.0.1:8080/etpms/login).
 
 ## Demo accounts
 
