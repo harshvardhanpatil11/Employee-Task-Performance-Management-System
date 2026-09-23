@@ -98,9 +98,7 @@ $env:CATALINA_BASE = $tomcat
 
 Keep this window open while the server runs. Press **Ctrl+C** in the window to stop Tomcat. If port `8080` is already in use, change the connector port in `$tomcat\conf\server.xml` and use the new port in the URL.
 
-### 5. Open the application
 
-Visit [http://Taskflow/login](http://127.0.0.1:8080/etpms/login).
 
 ## Demo accounts
 
